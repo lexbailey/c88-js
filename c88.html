@@ -57,7 +57,7 @@
 		}
 
 		//GUI function. Set bits that the user can see on the screen.
-		function updateBits(prefix, bits, numbits){
+		function updateBits(prefix, bits, numbits, val){
 			//For each bit according to numbits total
 			for (var i=0; i<=numbits-1; i++){
 				//find the image tag which has an id that starts with the prefix and ends with the currend index
@@ -66,6 +66,9 @@
 				if (bits[i]==1){image.src="images/bit_1.png";}
 				else{image.src="images/bit_0.png";}
 			}
+            if (['r', 'p', 'o'].includes(prefix)){
+                document.getElementById(prefix + 'Val').innerText = val;
+            }
 		}
 
 		//Set the inputs to the C88 object (the memory and the GP input)
@@ -115,10 +118,10 @@
 			myOutBits = numToBits(myOut);
 
 			//Update the GUI with the new bit arrays
-			updateBits("", bits, 64);
-			updateBits("r", myRegBits, 8);
-			updateBits("p", myPCBits, 3);
-			updateBits("o", myOutBits, 8);
+			updateBits("", bits, 64, null);
+			updateBits("r", myRegBits, 8, myReg);
+			updateBits("p", myPCBits, 3, myPC);
+			updateBits("o", myOutBits, 8, myOut);
 
 			//Show the program.
 			disassemble();
@@ -349,12 +352,14 @@
 			<td><img id="r5" src="images/bit_0.png" /></td>
 			<td><img id="r6" src="images/bit_0.png" /></td>
 			<td><img id="r7" src="images/bit_0.png" /></td>
+            <td id="rVal">0</td>
 		</tr>
 		<tr><td colspan="9"><h3>PC:</h3></td></tr>
 		<tr>
 			<td><img id="p0" src="images/bit_0.png" /></td>
 			<td><img id="p1" src="images/bit_0.png" /></td>
 			<td><img id="p2" src="images/bit_0.png" /></td>
+            <td id="pVal">0</td>
 		</tr>
 
 		<tr>
@@ -377,6 +382,7 @@
 			<td><img id="o5" src="images/bit_0.png" /></td>
 			<td><img id="o6" src="images/bit_0.png" /></td>
 			<td><img id="o7" src="images/bit_0.png" /></td>
+            <td id="oVal">0</td>
 		</tr>
 
 		<tr><td colspan="9"><h3>GP Input:</h3></td></tr>
